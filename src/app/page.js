@@ -1,22 +1,22 @@
+"use client";
+
 import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import MountainCanvas from "@/components/mountain-canvas";
+import UserSelector from "@/components/user-selector";
+
+const DEFAULT_USER = "empowermint";
 
 export default function Page({ data }) {
+  const searchParams = useSearchParams();
+  const user = searchParams.get("user") || DEFAULT_USER;
   const contributions = [0];
-  const user = "empowermint";
 
   return (
     <>
       <header className="flex justify-between items-center p-4 tracking-wider">
-        <div className="">
-          <h1 className="text-3xl font-bold">Git Mountains</h1>
-        </div>
-        <div className="flex space-x-2">
-          <span className="text-xl">{user}</span>
-          <button className="text-s tracking-widest px-2 py-0 rounded-lg border-x-2 border-violet-400 hover:shadow-md hover:bg-violet-300">
-            Switch
-          </button>
-        </div>
+        <h1 className="text-3xl font-bold">Git Mountains</h1>
+        <UserSelector user={user} />
       </header>
 
       <main>
