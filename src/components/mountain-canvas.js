@@ -35,11 +35,12 @@ export default function MountainCanvas({ gitHubData }) {
 
       <OrbitControls
         maxPolarAngle={Math.PI / 2 - 0.01}
-        keyPanSpeed={100}
+        panSpeed={1.5}
         minDistance={10}
         maxDistance={45}
         zoomSpeed={0.25}
         rotateSpeed={0.5}
+        enableDamping={true}
       />
     </Canvas>
   );
@@ -64,6 +65,7 @@ function MountainRange({ gitHubData }) {
       x: (index - xOffset) * X_SPACING,
       y: normalisedHeight / 2,
       z: Math.sin(index) * Z_SPACING + (MAX_HEIGHT - normalisedHeight),
+      rotation: (index % 2) * (Math.PI / 5),
       contributionCount: point.contributionCount,
       date: point.date,
     };
@@ -82,6 +84,7 @@ function MountainRange({ gitHubData }) {
             x={mountain.x}
             y={mountain.y}
             z={mountain.z}
+            rotation={mountain.rotation}
           />
         );
       })}
@@ -89,9 +92,14 @@ function MountainRange({ gitHubData }) {
   );
 }
 
-function Mountain({ x, y, z, radius, height, radialSegments }) {
+function Mountain({ x, y, z, radius, height, radialSegments, rotation }) {
   return (
-    <mesh position={[x, y, z]} castShadow={true} receiveShadow={true}>
+    <mesh
+      position={[x, y, z]}
+      castShadow={true}
+      receiveShadow={true}
+      rotation-y={rotation}
+    >
       <coneGeometry args={[radius, height, radialSegments]} />
       <meshStandardMaterial color={"violet"} />
     </mesh>
