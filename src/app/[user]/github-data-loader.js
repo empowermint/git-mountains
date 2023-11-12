@@ -2,8 +2,11 @@ import { testData } from "../../test/sample-github-data";
 
 const DAYS_TO_LOAD = 30;
 
+const isTestSetting = process.env?.USE_TEST_DATA === "true" || false;
+const gitHubApiToken = process.env?.GITHUB_API_TOKEN || false;
+
 export default async function fetchGitHubData(user) {
-  if (process.env.USE_TEST_DATA) {
+  if (isTestSetting || !gitHubApiToken) {
     return cleanData(testData);
   }
 
@@ -11,7 +14,7 @@ export default async function fetchGitHubData(user) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.GITHUB_API_TOKEN}`,
+      Authorization: `Bearer ${gitHubApiToken}`,
     },
     body: JSON.stringify({
       query: constructGraphQuery(user),
