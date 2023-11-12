@@ -38,7 +38,7 @@ export default function MountainRange({ gitHubData }) {
     <>
       {mountains.map((mountain, index) => {
         if (mountain.height === 0) return null;
-        return <Mountain mountain={mountain} />;
+        return <Mountain key={index} mountain={mountain} />;
       })}
     </>
   );
