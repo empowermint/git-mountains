@@ -1,6 +1,6 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/19836997-2f18-48fb-bd06-cf77d7521bc0/deploy-status)](https://app.netlify.com/sites/git-mountains/deploys)
 
-# Git Mountains
+![Git Mountains](./public/git-mountains-readme-header.png)
 
 **Git Mountains** is a web app that visualises a user's GitGub commit history as a three-dimensional mountain range.
 
