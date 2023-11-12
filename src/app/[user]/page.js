@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import MountainCanvas from "@/components/mountain-canvas";
+import MountainCanvas from "@/components/MountainCanvas";
 import fetchGitHubData from "./github-data-loader";
 
 export default async function DisplayPage({ params }) {
