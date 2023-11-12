@@ -1,12 +1,11 @@
-import { Suspense } from "react";
-import MountainCanvas from "@/components/mountain-canvas";
+import UserSelector from "@/components/user-selector";
 
-export default function Page() {
+export default function HomePage() {
   return (
-    <main>
-      <Suspense fallback={"Loading..."}>
-        <MountainCanvas />
-      </Suspense>
-    </main>
+    <>
+      <div className="grid place-content-center place-items-center h-2/3">
+        <h2 className="text-8xl">Welcome</h2>
+      </div>
+    </>
   );
 }
