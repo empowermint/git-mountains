@@ -12,7 +12,7 @@ const Z_SPACING = 3;
 export default function MountainCanvas({ gitHubData }) {
   return (
     <Canvas shadows={true}>
-      <fog attach="fog" args={["lavender", 5, 40]} />
+      <fog attach="fog" args={["lavender", 40, 80]} />
       <ambientLight intensity={0.2} />
       <directionalLight
         intensity={2}
@@ -21,11 +21,15 @@ export default function MountainCanvas({ gitHubData }) {
         castShadow={true}
       />
 
-      <MountainRange heights={[1, 2, 3, 1, 2, 3, 0, 4, 5, 6, 2, 1]} />
+      <MountainRange gitHubData={gitHubData} />
 
       <mesh receiveShadow={true} rotation-x={-Math.PI / 2}>
-        <planeGeometry args={[100, 100]} />
-        <meshStandardMaterial color={"lavender"} />
+        <planeGeometry args={[500, 500]} />
+        <meshStandardMaterial
+          color={"white"}
+          emissive={"lavender"}
+          roughness={0.5}
+        />
       </mesh>
 
       <OrbitControls />
@@ -33,12 +37,17 @@ export default function MountainCanvas({ gitHubData }) {
   );
 }
 
-function MountainRange({ heights }) {
+function MountainRange({ gitHubData }) {
+  const heights = [];
+  gitHubData.forEach((point) => {
+    heights.push(point.contributionCount);
+  });
+
   const maxInput = Math.max(...heights);
   const xOffset = Math.floor(heights.length) / 2;
 
-  const mountains = heights.map((height, index) => {
-    const normalisedHeight = (height / maxInput) * MAX_HEIGHT;
+  const mountains = gitHubData.map((point, index) => {
+    const normalisedHeight = (point.contributionCount / maxInput) * MAX_HEIGHT;
 
     return {
       height: normalisedHeight,
@@ -47,6 +56,8 @@ function MountainRange({ heights }) {
       x: (index - xOffset) * X_SPACING,
       y: normalisedHeight / 2,
       z: Math.sin(index) * Z_SPACING + (MAX_HEIGHT - normalisedHeight),
+      contributionCount: point.contributionCount,
+      date: point.date,
     };
   });
 
