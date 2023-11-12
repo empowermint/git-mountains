@@ -1,21 +1,9 @@
-"use server";
-
-import { Suspense } from "react";
-import MountainCanvas from "../../components/mountain-canvas";
+import { testData } from "../../test/sample-github-data";
 
 const DAYS_TO_LOAD = 30;
 
-export default async function GitHubDataLoader({ user }) {
-  const gitHubData = await fetchGitHubData(user);
+export default async function fetchGitHubData(user) {
 
-  return (
-    <Suspense fallback="Loading...">
-      <MountainCanvas gitHubData={gitHubData} />
-    </Suspense>
-  );
-}
-
-async function fetchGitHubData(user) {
   const requestOptions = {
     method: "POST",
     headers: {
@@ -32,9 +20,10 @@ async function fetchGitHubData(user) {
       "https://api.github.com/graphql",
       requestOptions
     );
-    console.log("API fetch result: " + result);
 
-    return await result.json();
+    const data = await result.json();
+
+    return cleanData(data);
   } catch (error) {
     console.log(await error.json(), result);
 
@@ -66,4 +55,17 @@ function constructGraphQuery(user) {
         }
       }
     }`;
+}
+
+function cleanData(data) {
+  const unwrappedData =
+    data.data.user.contributionsCollection.contributionCalendar.weeks;
+  let cleanData = [];
+  unwrappedData.forEach((week) => {
+    week.contributionDays.forEach((day) => {
+      cleanData.push(day);
+    });
+  });
+
+  return cleanData;
 }
