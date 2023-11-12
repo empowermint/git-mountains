@@ -8,6 +8,7 @@ const MAX_HEIGHT = 12;
 const WIDTH = 0.5;
 const X_SPACING = 2.5;
 const Z_SPACING = 3;
+const HORIZON = 150;
 
 export default function MountainCanvas({ gitHubData }) {
   return (
@@ -24,7 +25,7 @@ export default function MountainCanvas({ gitHubData }) {
       <MountainRange gitHubData={gitHubData} />
 
       <mesh receiveShadow={true} rotation-x={-Math.PI / 2}>
-        <planeGeometry args={[500, 500]} />
+        <circleGeometry args={[HORIZON, HORIZON]} />
         <meshStandardMaterial
           color={"white"}
           emissive={"lavender"}
