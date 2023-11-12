@@ -11,9 +11,9 @@ const Z_SPACING = 3;
 
 export default function MountainCanvas({ gitHubData }) {
   return (
-    <Canvas shadows={true}>
-      <fog attach="fog" args={["lavender", 40, 80]} />
-      <ambientLight intensity={0.2} />
+    <Canvas shadows={true} camera={{ position: [0, 0.1, 45] }}>
+      <fog attach="fog" args={["lavender", 30, 80]} />
+      <ambientLight intensity={0.3} />
       <directionalLight
         intensity={2}
         color="white"
@@ -32,7 +32,14 @@ export default function MountainCanvas({ gitHubData }) {
         />
       </mesh>
 
-      <OrbitControls />
+      <OrbitControls
+        maxPolarAngle={Math.PI / 2 - 0.01}
+        keyPanSpeed={100}
+        minDistance={10}
+        maxDistance={45}
+        zoomSpeed={0.25}
+        rotateSpeed={0.5}
+      />
     </Canvas>
   );
 }
