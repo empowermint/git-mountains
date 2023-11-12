@@ -5,6 +5,7 @@ import { OrbitControls } from "@react-three/drei";
 import { useControls } from "leva";
 
 const MAX_HEIGHT = 12;
+const NORMALISATION_THRESHOLD = 7;
 const WIDTH = 0.5;
 const X_SPACING = 2.5;
 const Z_SPACING = 3;
@@ -56,7 +57,10 @@ function MountainRange({ gitHubData }) {
   const xOffset = Math.floor(heights.length) / 2;
 
   const mountains = gitHubData.map((point, index) => {
-    const normalisedHeight = (point.contributionCount / maxInput) * MAX_HEIGHT;
+    const normalisedHeight =
+      maxInput > NORMALISATION_THRESHOLD
+        ? (point.contributionCount / maxInput) * MAX_HEIGHT
+        : point.contributionCount;
 
     return {
       height: normalisedHeight,
