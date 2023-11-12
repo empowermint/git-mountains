@@ -3,6 +3,9 @@ import { testData } from "../../test/sample-github-data";
 const DAYS_TO_LOAD = 30;
 
 export default async function fetchGitHubData(user) {
+  if (process.env.USE_TEST_DATA) {
+    return cleanData(testData);
+  }
 
   const requestOptions = {
     method: "POST",
