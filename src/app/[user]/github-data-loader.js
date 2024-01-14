@@ -31,9 +31,7 @@ export default async function fetchGitHubData(user) {
 
     return cleanData(data);
   } catch (error) {
-    console.log(await error.json(), result);
-
-    throw new Error("Data did not load");
+    throw new Error("Data did not load: " + error);
   }
 }
 
